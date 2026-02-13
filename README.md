@@ -52,9 +52,9 @@ Dark-Floor/
 └── requirements.txt  # Python dependencies
 ```
 
-## Game Controls
+## How to play
 
-[Controls to be documented]
+See [docs/HOW_TO_PLAY.md](docs/HOW_TO_PLAY.md)
 
 ## Development
 
