@@ -28,11 +28,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Contributing guidelines
 
 ### To Do (Future Releases)
-- Combat system refinement
-- Save/load functionality
 - Additional enemy types
 - More item variety
 - Advanced status effects (poison, slow, blind, cursed)
-- Difficulty settings
-- Sound effects (actual audio)
-- Multiplayer support
