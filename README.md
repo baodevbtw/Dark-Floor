@@ -20,7 +20,7 @@ A roguelike terminal game written in Python using the curses library.
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/Dark-Floor.git
+git clone https://github.com/baodevbtw/Dark-Floor.git
 cd Dark-Floor
 ```
 
@@ -58,8 +58,8 @@ Dark-Floor/
 
 ## Development
 
-This project is in early development. Feel free to contribute!
+This project is in early development. See [CONTRIBUTING.md](CONTRIBUTING.md) for how to help!
 
 ## License
 
-[Add your license here]
+MIT License - See [LICENSE](LICENSE) file for details
