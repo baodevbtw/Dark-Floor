@@ -7,7 +7,7 @@ Thank you for your interest in contributing to Dark Floor! This document provide
 1. Fork the repository
 2. Clone your fork:
 ```bash
-git clone https://github.com/yourusername/Dark-Floor.git
+git clone https://github.com/baodevbtw/Dark-Floor.git
 cd Dark-Floor
 ```
 

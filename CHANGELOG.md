@@ -26,8 +26,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Semantic versioning (0.1.0)
 - MIT License
 - Contributing guidelines
-
-### To Do (Future Releases)
-- Additional enemy types
-- More item variety
-- Advanced status effects (poison, slow, blind, cursed)
