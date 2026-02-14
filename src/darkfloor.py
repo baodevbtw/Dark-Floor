@@ -66,7 +66,10 @@ class Chaser(Entity):
     def update(self, ctx):
         super().update(ctx); px, py = ctx.pos
         dist = abs(self.x-px) + abs(self.y-py)
-        if dist < 1: ctx.player.hp = 0
+        if dist < 1:
+            ctx.player.hp = 0
+            ctx.player.death_cause = "Something was breathing behind you."
+            return "dead"
         elif dist < 10 and self.cd <= 0:
             self.move_towards(ctx, *ctx.pos); self.cd = max(1, ctx.floor // 5)
             ctx.sounds.emit(self.x, self.y, "A heavy thud", 15, ctx)
@@ -89,9 +92,12 @@ class Ambusher(Entity):
         dist = math.hypot(self.x-px, self.y-py)
         if dist < 3.5: 
             self.trig, self.char, self.color = True, 'A', 9
-            ctx.sounds.emit(self.x, self.y, "Got you", 10, ctx)
+            ctx.sounds.emit(self.x, self.y, "A deadly scream", 10, ctx)
         if self.trig:
-            if dist < 1: ctx.player.hp = 0
+            if dist < 1: 
+                ctx.player.hp = 0
+                ctx.player.death_cause = "It was waiting there the whole time."
+                return "dead"
             elif self.cd <= 0: self.move_towards(ctx, *ctx.pos); self.cd = 1
             else: self.cd -= 1
     def get_v(self, ctx): return (self.char, self.color if int(ctx.t*10)%2 else 1) if self.trig else ('#', 1)
@@ -163,14 +169,44 @@ def visible(ctx, x, y):
         d = math.hypot(lx, ly)
         if d < l['r'] and (l['a']>=360 or (d>0 and (lx*l['d'][0]+ly*l['d'][1])/d > math.cos(math.radians(l['a']/2)))): return True
     return False
-def main(scr, SEED):
+def death_screen(scr, player, seed):
+    scr.nodelay(0); scr.clear()
+    lines = [
+        "","YOU ARE STILL HERE","",player.death_cause,"",f"The world you lose: {seed}","The floor does not remember you.","","[R] Restart","[Q] Quit"]
+    for i,l in enumerate(lines):
+        scr.addstr(H//2-5+i, (W-len(l))//2, l, curses.color_pair(5))
+    scr.refresh()
+    while True:
+        k = scr.getch()
+        if k in (ord('r'), ord('R')): return "restart"
+        if k in (ord('q'), ord('Q'), 27): return "quit"
+def main(scr, seed):
     curses.curs_set(0); curses.start_color(); curses.use_default_colors()
     for i,c in enumerate([7,0,6,3,5,1,4,7,2,3,1], 1): curses.init_pair(i, c, -1)
     player, floor, inv, sel, face, sound_sys = Player(), 20, [Flashlight()], 0, (1,0), SoundSystem()
-    grid, pos, entities, fog = gen(floor, SEED)
+    grid, pos, entities, fog = gen(floor, seed)
+    show_help = False
+    help_content = []
+    try:
+        with open("help.txt", "r") as f:
+            help_content = f.readlines()
+    except FileNotFoundError:
+        help_content = ["help.txt not found.", "Press H to return."]
     while player.hp > 0:
         t0, _ = time.time(), scr.nodelay(1)
         key = scr.getch()
+        if key in (ord('h'), ord('H')):
+            show_help = not show_help
+            scr.erase()
+        if show_help:
+            scr.addstr(0, 0, "--- HELP MENU (Press H to Return) ---", curses.color_pair(3))
+            for i, line in enumerate(help_content):
+                if i < H - 2: # Prevent writing off screen
+                    scr.addstr(i + 2, 0, line.strip(), curses.color_pair(7))
+            scr.refresh()
+            time.sleep(1/FPS)
+            continue
+        # --- Normal Game Logic Starts Here ---
         dx, dy = {ord('w'):(0,-1),ord('s'):(0,1),ord('a'):(-1,0),ord('d'):(1,0)}.get(key,(0,0))
         if dx or dy: face = (dx, dy)
         ctx = Game(player, pos, grid, entities, inv, face, floor, fog); ctx.sounds = sound_sys
@@ -179,16 +215,23 @@ def main(scr, SEED):
             it = inv[sel]; it.on = not getattr(it, 'on', False); it.use(ctx)
             if ctx.used: inv.pop(sel); sel = max(0, sel-1)  
         if dx or dy:
-            player.hp -= 1; nx, ny = pos[0]+dx, pos[1]+dy
+            player.change_hp(-1); nx, ny = pos[0]+dx, pos[1]+dy
             if 0 <= nx < W and 0 <= ny < H and grid[ny][nx] != '#':
                 t = grid[ny][nx]
                 if t in ITEM_TYPES and len(inv) < 5: inv.append(ITEM_TYPES[t]()); grid[ny][nx] = '.'
-                if t == 'E': floor -= 1; grid, pos, entities, fog = gen(floor, SEED)
+                if t == 'E': floor -= 1; grid, pos, entities, fog = gen(floor, seed)
                 else: pos = (nx, ny)
-        player.san -= 0.01; player.update(ctx); fog = update_fog(ctx); sound_sys.update()
+        player.change_san(-0.01); player.update(ctx); fog = update_fog(ctx); sound_sys.update()
+        if player.san <= 0:
+            player.death_cause = "You were lost inside your own thoughts."
+            player.hp = 0
+            break
         for it in inv: it.tick(ctx)
         inv[:] = [i for i in inv if getattr(i, 'v', 1) > 0]; sel = min(sel, max(0, len(inv)-1))
-        for e in entities: e.update(ctx)
+        for e in entities:
+            if e.update(ctx) == "dead":
+                player.hp = 0
+                break
         entities[:] = [e for e in entities if not e.dead]
         scr.erase()
         for y in range(H):
@@ -203,6 +246,7 @@ def main(scr, SEED):
                     ch, col = (t, {'#':1, '.':2, 'E':4}.get(t, 7)) if t in '#.E' else ITEM_TYPES[t].get_v(ctx)
                 scr.addch(y, x, ch, curses.color_pair(col))
         scr.addstr(H, 0, "".join(f"[{i+1}:{it.name}{'*' if getattr(it,'on',0) else ''}]" if i==sel else f" {i+1}:{it.char} " for i,it in enumerate(inv)))
-        scr.addstr(H+1, 0, f"FL:{floor} HP:{int(player.hp)} SAN:{int(player.san)}%", curses.color_pair(3))
+        scr.addstr(H+1, 0, f"FL:{floor} HP:{int(player.hp)} SAN:{int(player.san)}% [H] HELP", curses.color_pair(3))
         for i, s in enumerate(sound_sys.active_sounds): scr.addstr(H+3+i, 0, s["msg"], curses.color_pair(5))
         scr.refresh(); time.sleep(max(0, 1/FPS-(time.time()-t0)))
+    return death_screen(scr, player, seed)

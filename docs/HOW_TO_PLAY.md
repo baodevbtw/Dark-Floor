@@ -6,6 +6,8 @@
 python main.py
 ```
 
+You can restart endlessly without closing the program.
+
 ## Controls
 
 ### Movement
@@ -76,13 +78,17 @@ If you can’t, it’s already here.
 ## Objective
 
 **Escape the dungeon.**  
+*(Death is not the end. It just loops.)*  
 *(There is no evidence the **End** exists.)*
 
 1. Keep going down. Stopping is not an option.
-2. Trust the exit (**E**), if you want
+2. Trust the exit (**E**), if you want.
 3. Watch your **HP** and **SAN**. They are the only proof you still exist.
 4. Hoard anything that makes it hurt less.
 5. Run from everything else. It knows where you are.
+
+The game does not want you to win.  
+It wants you to **continue**.
 
 ## Survival Tips
 
@@ -113,6 +119,10 @@ Low sanity causes:
 
 At 0 SAN, the game stops pretending to be fair.
 
+The UI still works.  
+The rules still apply.  
+Only **you** stop understanding them.
+
 ---
 
 ### Lighting
@@ -124,7 +134,10 @@ At 0 SAN, the game stops pretending to be fair.
   - Full illumination around you  
 
 Light reveals the dungeon.  
-It also tells the dungeon where you are.
+It also reveals **you**.
+
+Nothing in the dark was lost.  
+It was only waiting to be noticed.
 
 ---
 
@@ -147,14 +160,16 @@ They also create new ones.
 - Predictable pattern  
 
 It wants you dead.  
-It’s honest about it.
+It doesn’t know why.  
+It doesn’t need to.
 
 **Stalker (S)** - High threat  
 - Hunts intelligently  
 - Drains sanity just by seeing you  
 - Dangerous in light  
 
-If you see it, it already knows where you are.
+If you see it, it already knows where you are.  
+If you don’t, it’s closer.
 
 **Ambusher (#)** - Extreme threat  
 - Hides in darkness  
@@ -163,18 +178,33 @@ If you see it, it already knows where you are.
 - Use light to detect  
 - If you see a wall blinking, it's already too late  
 
-That wall was never a wall.
+That wall was never a wall.  
+It was a decision you made earlier.
 
 ---
 
 ## Game Over
 
-The game ends when:
-- Your **HP** reaches 0 (enemy contact, starvation)  
-- You willingly quit with Ctrl+C  
+When your **HP** or **SAN** reaches 0, the game does not immediately exit.
 
-There is no victory screen.  
-Only quieter deaths.
+Instead, a **death screen** is shown.
+
+### Death Screen
+Displays:
+- Title message: `YOU ARE STILL HERE`
+- Cause of death
+- World seed of the run
+- A reminder that the world will not change without you
+
+### Options
+- **R** → Restart  
+- **Q / ESC** → Quit  
+
+Restarting does not fix what happened.  
+It only proves that it can happen again.
+
+Quitting does not end the game.  
+It only ends your memory of it.
 
 ---
 
@@ -189,3 +219,6 @@ Only quieter deaths.
 The deeper you go,  
 the less the game explains,  
 and the more it *expects you to already know*.
+
+Which is strange,  
+because you don’t remember learning any of this.
