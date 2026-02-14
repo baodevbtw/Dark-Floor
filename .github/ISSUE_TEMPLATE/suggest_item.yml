@@ -1,0 +1,40 @@
+name: Item Suggestion
+description: Propose a new item for Dark Floor
+title: "[ITEM] "
+labels: [item, enhancement]
+
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Item Name
+    validations:
+      required: true
+
+  - type: textarea
+    id: concept
+    attributes:
+      label: Concept
+      description: What is this item?
+
+  - type: textarea
+    id: mechanics
+    attributes:
+      label: Mechanics
+      description: How does it work?
+
+  - type: textarea
+    id: balance
+    attributes:
+      label: Balance Considerations
+      description: Why is this not overpowered?
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: Item Type
+      options:
+        - Consumable
+        - Equipment
+        - Light Source
+        - Utility
