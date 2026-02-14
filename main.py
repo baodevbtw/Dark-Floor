@@ -21,9 +21,7 @@ def setup_and_run():
     print(f"Base Seed: {SEED}")
     print("Loading game...")
     time.sleep(1.5)
-
     run_id = 0
-
     try:
         while True:
             rng_seed = f"{SEED}-{run_id}"
@@ -32,7 +30,6 @@ def setup_and_run():
 
             if result == "quit":
                 break
-
             run_id += 1
 
     except KeyboardInterrupt:

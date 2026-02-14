@@ -185,9 +185,28 @@ def main(scr, seed):
     for i,c in enumerate([7,0,6,3,5,1,4,7,2,3,1], 1): curses.init_pair(i, c, -1)
     player, floor, inv, sel, face, sound_sys = Player(), 20, [Flashlight()], 0, (1,0), SoundSystem()
     grid, pos, entities, fog = gen(floor, seed)
+    show_help = False
+    help_content = []
+    try:
+        with open("help.txt", "r") as f:
+            help_content = f.readlines()
+    except FileNotFoundError:
+        help_content = ["help.txt not found.", "Press H to return."]
     while player.hp > 0:
         t0, _ = time.time(), scr.nodelay(1)
         key = scr.getch()
+        if key in (ord('h'), ord('H')):
+            show_help = not show_help
+            scr.erase()
+        if show_help:
+            scr.addstr(0, 0, "--- HELP MENU (Press H to Return) ---", curses.color_pair(3))
+            for i, line in enumerate(help_content):
+                if i < H - 2: # Prevent writing off screen
+                    scr.addstr(i + 2, 0, line.strip(), curses.color_pair(7))
+            scr.refresh()
+            time.sleep(1/FPS)
+            continue
+        # --- Normal Game Logic Starts Here ---
         dx, dy = {ord('w'):(0,-1),ord('s'):(0,1),ord('a'):(-1,0),ord('d'):(1,0)}.get(key,(0,0))
         if dx or dy: face = (dx, dy)
         ctx = Game(player, pos, grid, entities, inv, face, floor, fog); ctx.sounds = sound_sys
@@ -227,7 +246,7 @@ def main(scr, seed):
                     ch, col = (t, {'#':1, '.':2, 'E':4}.get(t, 7)) if t in '#.E' else ITEM_TYPES[t].get_v(ctx)
                 scr.addch(y, x, ch, curses.color_pair(col))
         scr.addstr(H, 0, "".join(f"[{i+1}:{it.name}{'*' if getattr(it,'on',0) else ''}]" if i==sel else f" {i+1}:{it.char} " for i,it in enumerate(inv)))
-        scr.addstr(H+1, 0, f"FL:{floor} HP:{int(player.hp)} SAN:{int(player.san)}%", curses.color_pair(3))
+        scr.addstr(H+1, 0, f"FL:{floor} HP:{int(player.hp)} SAN:{int(player.san)}% [H] HELP", curses.color_pair(3))
         for i, s in enumerate(sound_sys.active_sounds): scr.addstr(H+3+i, 0, s["msg"], curses.color_pair(5))
         scr.refresh(); time.sleep(max(0, 1/FPS-(time.time()-t0)))
     return death_screen(scr, player, seed)

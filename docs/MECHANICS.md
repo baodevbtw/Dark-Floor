@@ -22,7 +22,7 @@ Dark Floor is a terminal-based roguelike game. This document details all game me
 ### Health (HP)
 - **Starting HP:** 500
 - **Decrement:** -1 per movement action
-- **Game Over:** Player dies when HP reaches 0
+- **Game Over:** Player dies when HP reaches 0 and death screen is shown
 - **Death Message:** Customizable when HP <= 0
 
 ### Sanity (SAN)
@@ -31,6 +31,7 @@ Dark Floor is a terminal-based roguelike game. This document details all game me
 - **Fog Penalty:** -0.02 sanity when standing in fog
 - **Restoration:** Items can restore sanity
 - **Status:** Affects player color when damaged
+- **Game Over:** Player dies when SAN reaches 0 and death screen is shown
 
 ### Color System
 - **Default Color:** 8 (white)
@@ -240,7 +241,38 @@ Emitted by entities during actions:
 
 ---
 
+## Death Screen
+
+When the player dies (HP ≤ 0 or SAN ≤ 0), the game enters a death screen state.
+
+### Display
+- Title message: `YOU ARE STILL HERE`
+- Cause of death
+- World seed of the run
+- Flavor text
+
+### Controls
+- **R** → Restart game with a new run
+- **Q / ESC** → Quit game
+
+The game is fully paused while on this screen.
+
+---
+
 ## Game Loop
+
+The game runs in a single-session loop and returns control on death.
+The launcher is responsible for restarting or exiting.
+
+### Restart Flow
+
+1. Player dies  
+2. Death screen is shown  
+3. Player presses:
+   - `R` → Game state resets and a new run starts  
+   - `Q` → Program exits cleanly  
+
+No process restart is required.
 
 ### Frame Rate
 - **Target FPS:** 10 frames per second
@@ -314,6 +346,8 @@ Line H+3: [Clear] A heavy thud to the East
 ### Usage
 - Seed is displayed on game startup and in the HUD.
 - Seed is printed to terminal for debugging and sharing runs.
+- Seed is also displayed on the death screen.
+- Restart generates a new derived seed.
 
 ### Determinism
 - All RNG-dependent systems derive from the seed:

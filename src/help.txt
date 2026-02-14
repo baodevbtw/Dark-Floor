@@ -1,0 +1,41 @@
+--- DARK FLOOR: SURVIVAL GUIDE ---
+
+[CONTROLS]
+WASD   : Move / Face Direction
+1-5    : Select Inventory Slot
+E      : Use / Toggle Selected Item
+H      : Close Help Menu
+
+[HUD]
+FL     : Current Floor (Goal: 0)
+HP     : Health (Move/Hits drain this)
+SAN    : Sanity (Fog/Stalkers drain this)
+[*]    : Item is active/toggled on
+
+[SYMBOLS]
+@ Player  |  # Wall    |  . Floor   |  E Exit
++ Water   |  * R-Water |  v Vitality|  B Bomb
+F Flash   |  L Lantern |  ? Fog     |  X Chaser
+S Stalker |  A Ambusher|            |
+
+[ENEMIES]
+X - Chaser  : Aggressive. Chases when close.
+S - Stalker : Drains SAN on sight. Hunts slowly.
+A - Ambusher: Camouflaged as '#'. One-hit kill.
+
+[RESOURCES]
+Water (+)   : +100 HP
+R-Water (*) : +200 HP, +10 SAN
+Vitality (v): +10 SAN
+Flash (F)   : 90° Light Cone (Long range)
+Lantern (L) : 360° Light Circle (Short range)
+Bomb (B)    : Destroys walls and enemies in 3x3
+
+[NOTES]
+- Every step costs 1 HP. 
+- Standing in Fog (?) rapidly drains SAN.
+- Light reveals items... and attracts 'them'.
+- Death (0 HP/SAN) is a loop. Seed is saved.
+
+The deeper you go, the less the world remembers you.
+-------------------------------------------------------
