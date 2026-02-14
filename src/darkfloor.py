@@ -2,12 +2,24 @@ import curses, time, random, math
 W, H, FPS, DEBUG = 50, 20, 10, False
 ITEM_TYPES = {}
 class Player:
+    MAX_HP = 1000
+    MAX_SAN = 100
     def __init__(self): 
         self.hp, self.san, self.effects, self.color = 500, 100.0, [], 8
         self.death_cause = "You don't remember how it happened."
+    def clamp_stats(self):
+        self.hp = max(0, min(self.hp, self.MAX_HP))
+        self.san = max(0, min(self.san, self.MAX_SAN))
+    def change_hp(self, amount):
+        self.hp += amount
+        self.clamp_stats()
+    def change_san(self, amount):
+        self.san += amount
+        self.clamp_stats()
     def update(self, ctx):
         for e in self.effects: e.tick(self, ctx)
         self.effects[:] = [e for e in self.effects if not e.expired()]
+        self.clamp_stats()
 class Game:
     def __init__(self, player, pos, grid, entities, inv, face, floor, fog):
         self.player, self.pos, self.grid, self.entities = player, pos, grid, entities
@@ -70,7 +82,7 @@ class Stalker(Entity):
         else:
             tx, ty = (ctx.pos if random.random() < 0.6 else (self.x+random.randint(-1,1), self.y+random.randint(-1,1)))
             self.move_towards(ctx, tx, ty, 0.3)
-        if (self.x, self.y) == ctx.pos: ctx.player.hp -= 10
+        if (self.x, self.y) == ctx.pos: ctx.player.change_hp(-10)
 class Ambusher(Entity):
     def __init__(self, x, y): super().__init__(x, y, '#', 1); self.trig, self.cd = False, 0
     def update(self, ctx):
@@ -93,15 +105,15 @@ class Item:
     def get_v(cls, ctx): return cls.char, cls.color
 class Water(Item):
     char, name, color = '+', 'H2O', 7
-    def use(self, ctx): ctx.player.hp = min(1000, ctx.player.hp+100); ctx.used = True
+    def use(self, ctx): ctx.player.change_hp(100); ctx.used = True
 class RainbowWater(Item):
     char, name, color = '*', 'H2O', 7
-    def use(self, ctx): ctx.player.hp, ctx.player.san = min(1000, ctx.player.hp+250), min(100, ctx.player.san+40); ctx.used = True
+    def use(self, ctx): ctx.player.change_hp(200); ctx.player.change_san(10) ; ctx.used = True
     @classmethod
     def get_v(cls, ctx): return cls.char, [7, 9, 10, 3, 5][int(ctx.t*8)%5]
 class Vit(Item):
     char, name, color = 'v', 'VIT', 9
-    def use(self, ctx): ctx.player.san = min(100, ctx.player.san+10); ctx.used = True
+    def use(self, ctx): ctx.player.change_san; ctx.used = True
 class Bomb(Item):
     char, name, color = 'B', 'BOM', 11
     def use(self, ctx):
