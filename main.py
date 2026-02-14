@@ -9,14 +9,16 @@ import curses
 import time
 from src.darkfloor import main
 
-VERSION = "0.1.0-alpha.2"  # See docs/VERSION.md for version details
+VERSION = "0.1.0-alpha.3"  # See docs/VERSION.md for version details
+
+SEED = "dark-floor"
 
 def setup_and_run():
-    """Initialize and run the game."""
     print("=" * 40)
     print("Dark Floor")
     print("=" * 40)
     print(f"Version: {VERSION}")
+    print(f"Seed: {SEED}")
     print("Loading game...")
     time.sleep(1.5)
     

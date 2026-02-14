@@ -5,12 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.0-alpha.3] - 2026-02-14
+
+### Added
+- Global world seed system for reproducible dungeon generation.
+- Seed is displayed on game startup.
+- Seed is logged in terminal for debugging and sharing runs.
+
+### Changed
+- Dungeon and RNG initialization now derive from a single seed value.
+
+### Fixed
+- Random state is no longer implicitly global; all procedural systems now share the same deterministic source.
+
+---
+
 ## [0.1.0-alpha.2] - 2026-02-14
 
 ### Fixed
 - Prevented crashes when dungeon generation produces no valid rooms.
 - Bounded fog growth to avoid unbounded memory usage while preserving spread behavior.
 - Fixed entity update loop to avoid list mutation during iteration.
+- Vitamin item now correctly increases player SAN.
 
 ---
 

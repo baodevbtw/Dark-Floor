@@ -13,6 +13,7 @@ Dark Floor is a terminal-based roguelike game. This document details all game me
 7. [Fog of War](#fog-of-war)
 8. [Status Effects](#status-effects)
 9. [Game Loop](#game-loop)
+10. [World Seed](#world-seed)
 
 ---
 
@@ -300,3 +301,29 @@ Line H+3: [Clear] A heavy thud to the East
 - **Difficulty Scaling:** More enemies on lower floors
 - **Enemy Count Formula:** 3 + (20 - floor) ÷ 3
 - **Goal:** Reach floor 0 to escape the dungeon
+
+---
+
+## World Seed
+
+### Seed System
+- The game uses a single global **world seed** to initialize all procedural systems.
+- The seed is generated at startup or provided manually.
+- The same seed always produces the same dungeon layouts, entity placement, and item distribution.
+
+### Usage
+- Seed is displayed on game startup and in the HUD.
+- Seed is printed to terminal for debugging and sharing runs.
+
+### Determinism
+- All RNG-dependent systems derive from the seed:
+  - Dungeon generation
+  - Entity spawning
+  - Fog initial state
+  - Item placement
+
+This allows full reproducibility of runs for:
+- Bug reports
+- Testing
+- Speedrunning
+- Daily challenges (future)
