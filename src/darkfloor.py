@@ -1,5 +1,5 @@
 import curses, time, random, math
-W, H, FPS, DEBUG = 50, 20, 10, False
+W, H, FPS, DEBUG = 50, 20, 10, True
 ITEM_TYPES = {}
 class Player:
     MAX_HP = 1000
@@ -32,8 +32,8 @@ def update_fog(ctx):
                 nx, ny = x + random.randint(-1, 1), y + random.randint(-1, 1)
                 if 0 <= nx < W and 0 <= ny < H: new_fog.add((nx, ny))
     if len(new_fog) > 20:
-        for _ in range(max(1, len(new_fog)//10)): 
-            if new_fog: new_fog.remove(random.choice(list(new_fog)))
+        for _ in range(max(1, len(new_fog)//10)):
+            new_fog.remove(random.choice(list(new_fog)))
     if ctx.pos in new_fog: ctx.player.san -= 0.2
     return new_fog
 class SoundSystem:
@@ -113,7 +113,7 @@ class RainbowWater(Item):
     def get_v(cls, ctx): return cls.char, [7, 9, 10, 3, 5][int(ctx.t*8)%5]
 class Vit(Item):
     char, name, color = 'v', 'VIT', 9
-    def use(self, ctx): ctx.player.change_san; ctx.used = True
+    def use(self, ctx): ctx.player.change_san(5); ctx.used = True
 class Bomb(Item):
     char, name, color = 'B', 'BOM', 11
     def use(self, ctx):
@@ -147,6 +147,9 @@ def gen(floor):
             cx, cy, tx, ty = *rooms[-2], *rooms[-1]
             while cx!=tx: cx+=1 if tx>cx else -1; grid[cy][cx]='.'
             while cy!=ty: cy+=1 if ty>cy else -1; grid[cy][cx]='.'
+    if not rooms:
+        rooms = [(W//2, H//2)]
+        grid[H//2][W//2] = '.'
     grid[rooms[-1][1]][rooms[-1][0]] = 'E'
     ents = [random.choice([Chaser, Stalker, Ambusher])(*r) for r in random.sample(rooms[1:], min(len(rooms)-1, 3 + (20-floor)//3))]
     tiles = [(x,y) for y in range(H) for x in range(W) if grid[y][x]=='.']

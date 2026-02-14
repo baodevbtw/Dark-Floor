@@ -51,6 +51,9 @@ Sound events display at bottom, with:
 - **Volume:** DEAFENING (close), Clear (medium), Faint (far)
 - **Direction:** North, South, East, West (relative to player)
 
+If you can hear it, it’s still far away.  
+If you can’t, it’s already here.
+
 ## Symbols
 
 | Symbol | Meaning |
@@ -72,72 +75,117 @@ Sound events display at bottom, with:
 
 ## Objective
 
-**Escape the dungeon!**
+**Escape the dungeon.**  
+*(There is no evidence the **End** exists.)*
 
-1. Navigate from **Floor 20** down to **Floor 0**
-2. Find the exit (**E**) on each floor
-3. Manage your **HP** and **SAN** (sanity)
-4. Collect items to aid survival
-5. Avoid or evade enemies
+1. Keep going down. Stopping is not an option.
+2. Trust the exit (**E**), if you want
+3. Watch your **HP** and **SAN**. They are the only proof you still exist.
+4. Hoard anything that makes it hurt less.
+5. Run from everything else. It knows where you are.
 
 ## Survival Tips
 
 ### Health Management
-- **Water (+):** Restore 100 HP
-- **Rainbow Water (*):** Restore 250 HP + 40 SAN (rare)
-- **Movement cost:** 1 HP per step
+- **Water (+):** Restore 100 HP  
+- **Rainbow Water (*):** Restore 200 HP + 10 SAN  
+- **Movement cost:** 1 HP per step  
 - Critical: Keep HP above 0!
 
+Every step is a decision.  
+Standing still keeps you alive.  
+Standing still lets *them* get closer.
+
+---
+
 ### Sanity Management
-- **Vitality (v):** Restore 10 SAN
-- **Constant drain:** -0.01 SAN per tick
-- **Fog penalty:** -0.2 SAN when standing in fog
-- **Stalker drain:** -1 SAN per tick when visible
+- **Vitality (v):** Restore 10 SAN  
+- **Constant drain:** -0.01 SAN per tick  
+- **Fog penalty:** -0.2 SAN when standing in fog  
+- **Stalker drain:** -1 SAN per tick when visible  
 - Sanity loss = increased danger
 
+Low sanity causes:
+- Shorter vision  
+- Fake sounds  
+- Faster fog growth  
+- More frequent encounters  
+
+At 0 SAN, the game stops pretending to be fair.
+
+---
+
 ### Lighting
-- **Flashlight (F):** 90° cone, 7 tiles, 800 charges
-  - Uses 1 charge per tick when active
-  - Directional based on your facing
-- **Lantern (L):** 360° circle, 4 tiles, 500 charges
-  - Uses 1 charge per tick when active
-  - Full illumination around you
-- **Strategy:** Use lights to see threats, toggle off to conserve
+- **Flashlight (F):** 90° cone, 7 tiles, 800 charges  
+  - Uses 1 charge per tick when active  
+  - Directional based on your facing  
+- **Lantern (L):** 360° circle, 4 tiles, 500 charges  
+  - Uses 1 charge per tick when active  
+  - Full illumination around you  
+
+Light reveals the dungeon.  
+It also tells the dungeon where you are.
+
+---
 
 ### Combat Strategy
-- **Avoid:** Better than fight (no offensive abilities)
-- **Items:** Bombs are your only offensive tool
-- **Bomb (B):** 3x3 explosion, kills enemies and destroys walls
-- **Escape:** Use bombs to clear paths or eliminate threats
+- **Avoid:** Better than fight (no offensive abilities)  
+- **Items:** Bombs are your only offensive tool  
+- **Bomb (B):** 3x3 explosion, kills enemies and destroys walls  
+- **Escape:** Use bombs to clear paths or eliminate threats  
+
+Bombs solve problems.  
+They also create new ones.
+
+---
 
 ### Enemy Danger Levels
 
-**Chaser (X)** - Medium threat
-- Chases directly when nearby
-- Loud (alerts to sounds)
-- Predictable pattern
+**Chaser (X)** - Medium threat  
+- Chases directly when nearby  
+- Loud (alerts to sounds)  
+- Predictable pattern  
 
-**Stalker (S)** - High threat
-- Hunts intelligently
-- Drains sanity just by seeing you
-- Dangerous in light
+It wants you dead.  
+It’s honest about it.
 
-**Ambusher (#)** - Extreme threat
-- Hides in darkness
-- Instant kill on contact
-- Transforms when triggered
-- Use light to detect
+**Stalker (S)** - High threat  
+- Hunts intelligently  
+- Drains sanity just by seeing you  
+- Dangerous in light  
+
+If you see it, it already knows where you are.
+
+**Ambusher (#)** - Extreme threat  
+- Hides in darkness  
+- Instant kill on contact  
+- Transforms when triggered  
+- Use light to detect  
+- If you see a wall blinking, it's already too late  
+
+That wall was never a wall.
+
+---
 
 ## Game Over
 
 The game ends when:
-- Your **HP** reaches 0 (enemy contact, starvation)
-- You willingly quit with Ctrl+C
+- Your **HP** reaches 0 (enemy contact, starvation)  
+- You willingly quit with Ctrl+C  
+
+There is no victory screen.  
+Only quieter deaths.
+
+---
 
 ## Advanced Tips
 
-1. **Sound Strategy:** Listen for enemy sounds to gauge distance and direction
-2. **Fog Zones:** Avoid fog when possible to preserve sanity
-3. **Resource Management:** Plan when to use limited charges on flashlights/lanterns
-4. **Inventory Limits:** You can only carry 5 items - plan pickups
-5. **Floor Difficulty:** Lower floors have more enemies - prepare carefully
+1. **Sound Strategy:** Listen for enemy sounds to gauge distance and direction  
+2. **Fog Zones:** Avoid fog when possible to preserve sanity  
+3. **Resource Management:** Plan when to use limited charges on flashlights/lanterns  
+4. **Inventory Limits:** You can only carry 5 items - plan pickups  
+5. **Floor Difficulty:** Lower floors have more enemies - prepare carefully  
+
+The deeper you go,  
+the less the game explains,  
+and the more it *expects you to already know*.
