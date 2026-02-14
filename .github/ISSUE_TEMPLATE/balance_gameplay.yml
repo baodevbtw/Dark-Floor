@@ -1,0 +1,49 @@
+name: Balance Feedback
+description: Report difficulty or tuning issues
+title: "[BALANCE] "
+labels: [balance]
+
+body:
+  - type: input
+    id: seed
+    attributes:
+      label: Seed
+      description: Run seed
+    validations:
+      required: true
+
+  - type: input
+    id: floor
+    attributes:
+      label: Floor Reached
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What felt wrong?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - Enemy difficulty
+        - Item power
+        - Fog mechanics
+        - Sanity system
+        - Sound system
+        - Other
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Experience
+
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggestions
