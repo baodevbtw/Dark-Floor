@@ -1,40 +1,40 @@
-name: Item Suggestion
-description: Propose a new item for Dark Floor
-title: "[ITEM] "
-labels: [item, enhancement]
+name: Entity Suggestion
+description: Propose a new enemy or NPC
+title: "[ENTITY] "
+labels: [entity, enhancement]
 
 body:
   - type: input
     id: name
     attributes:
-      label: Item Name
+      label: Entity Name
     validations:
       required: true
 
   - type: textarea
-    id: concept
+    id: behavior
     attributes:
-      label: Concept
-      description: What is this item?
+      label: Behavior
+      description: What does it do?
 
   - type: textarea
-    id: mechanics
+    id: threat
     attributes:
-      label: Mechanics
-      description: How does it work?
+      label: Threat Profile
+      description: How does it kill or pressure the player?
 
   - type: textarea
-    id: balance
+    id: counterplay
     attributes:
-      label: Balance Considerations
-      description: Why is this not overpowered?
+      label: Counterplay
+      description: How can the player survive?
 
   - type: dropdown
-    id: type
+    id: difficulty
     attributes:
-      label: Item Type
+      label: Intended Difficulty
       options:
-        - Consumable
-        - Equipment
-        - Light Source
-        - Utility
+        - Early game
+        - Mid game
+        - Late game
+        - Boss-tier
