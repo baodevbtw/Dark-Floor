@@ -18,12 +18,23 @@ def setup_and_run():
     print("Dark Floor")
     print("=" * 40)
     print(f"Version: {VERSION}")
-    print(f"Seed: {SEED}")
+    print(f"Base Seed: {SEED}")
     print("Loading game...")
     time.sleep(1.5)
-    
+
+    run_id = 0
+
     try:
-        curses.wrapper(main)
+        while True:
+            rng_seed = f"{SEED}-{run_id}"
+            print(f"Run seed: {rng_seed}")
+            result = curses.wrapper(main, rng_seed)
+
+            if result == "quit":
+                break
+
+            run_id += 1
+
     except KeyboardInterrupt:
         print("\nGame interrupted by user.")
     except Exception as e:
