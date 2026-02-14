@@ -1,6 +1,5 @@
 import curses, time, random, math
 W, H, FPS, DEBUG = 50, 20, 10, True
-ITEM_TYPES = {}
 class Player:
     MAX_HP = 1000
     MAX_SAN = 100
@@ -136,7 +135,9 @@ class Lantern(LightSource):
     char, name, color, max_stack = 'L', 'LAN', 10, 500
     def tick(self, ctx): super().tick(ctx, 360, 4)
 ITEM_TYPES = {'+': Water, '*': RainbowWater, 'v': Vit, 'B': Bomb, 'F': Flashlight, 'L': Lantern}
-def gen(floor):
+def gen(floor, seed=None):
+    if seed is not None:
+        random.seed(f"{seed}-{floor}")
     grid = [['#']*W for _ in range(H)]; rooms = []
     for _ in range(1200):
         w, h, x, y = random.randint(4,7), random.randint(3,6), random.randint(1,W-9), random.randint(1,H-7)
@@ -162,11 +163,11 @@ def visible(ctx, x, y):
         d = math.hypot(lx, ly)
         if d < l['r'] and (l['a']>=360 or (d>0 and (lx*l['d'][0]+ly*l['d'][1])/d > math.cos(math.radians(l['a']/2)))): return True
     return False
-def main(scr):
+def main(scr, SEED):
     curses.curs_set(0); curses.start_color(); curses.use_default_colors()
     for i,c in enumerate([7,0,6,3,5,1,4,7,2,3,1], 1): curses.init_pair(i, c, -1)
     player, floor, inv, sel, face, sound_sys = Player(), 20, [Flashlight()], 0, (1,0), SoundSystem()
-    grid, pos, entities, fog = gen(floor)
+    grid, pos, entities, fog = gen(floor, SEED)
     while player.hp > 0:
         t0, _ = time.time(), scr.nodelay(1)
         key = scr.getch()
@@ -182,7 +183,7 @@ def main(scr):
             if 0 <= nx < W and 0 <= ny < H and grid[ny][nx] != '#':
                 t = grid[ny][nx]
                 if t in ITEM_TYPES and len(inv) < 5: inv.append(ITEM_TYPES[t]()); grid[ny][nx] = '.'
-                if t == 'E': floor -= 1; grid, pos, entities, fog = gen(floor)
+                if t == 'E': floor -= 1; grid, pos, entities, fog = gen(floor, SEED)
                 else: pos = (nx, ny)
         player.san -= 0.01; player.update(ctx); fog = update_fog(ctx); sound_sys.update()
         for it in inv: it.tick(ctx)

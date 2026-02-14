@@ -54,6 +54,9 @@ Use GitHub Issues to report bugs or suggest features. Include:
 - Steps to reproduce (for bugs)
 - Expected vs actual behavior
 - Your environment (OS, Python version)
+- The world seed shown in-game (required for gameplay bugs)
+- Floor number where the bug occurred
+- If the bug occurred during a run, always copy the SEED from the startup screen so the issue can be reproduced exactly.
 
 ## Code of Conduct
 
