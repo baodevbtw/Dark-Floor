@@ -27,7 +27,7 @@ Dark Floor is a terminal-based roguelike game. This document details all game me
 ### Sanity (SAN)
 - **Starting Sanity:** 100%
 - **Decrement Rate:** -0.01 per game tick
-- **Fog Penalty:** -0.2 sanity when standing in fog
+- **Fog Penalty:** -0.02 sanity when standing in fog
 - **Restoration:** Items can restore sanity
 - **Status:** Affects player color when damaged
 
@@ -79,12 +79,12 @@ Dark Floor is a terminal-based roguelike game. This document details all game me
 - **Behavior:** Hunts intelligently, drains sanity
 - **Vision:** Uses light-based visibility system
 - **Movement:** 30% speed in darkness, chases visible player
-- **Sanity Drain:** -1 sanity per tick when visible to player
-- **Threat:** -10 HP on contact
+- **Sanity Drain:** -0.2 sanity per tick when visible to player
+- **Threat:** -5 HP on contact
 
 ### Ambusher (#)
 - **Color:** 1 (Blue) when inactive, 9 (Yellow) when triggered
-- **Trigger Range:** 3.5 tiles
+- **Trigger Range:** 2 tiles
 - **Trigger Visual:** Changes from '#' to 'A' when triggered
 - **Sound:** Emits "Got you" on trigger
 - **Activation:** Flashes color when active
@@ -105,14 +105,14 @@ Dark Floor is a terminal-based roguelike game. This document details all game me
 #### Water Bottles (+)
 - **Name:** H2O
 - **Color:** 7 (White)
-- **Effect:** Restore 100 HP
+- **Effect:** Restore 50 HP
 - **Max Stack:** 1
 - **Single Use:** Yes (consumed on use)
 
 #### Rainbow Water (*)
 - **Name:** H2O
 - **Color:** Cycles through 7, 9, 10, 3, 5 (animated)
-- **Effect:** Restore 250 HP + 40 SAN
+- **Effect:** Restore 100 HP + 10 SAN
 - **Max Stack:** 1
 - **Single Use:** Yes (consumed on use)
 - **Rarity:** Rare, provides superior healing
@@ -120,7 +120,7 @@ Dark Floor is a terminal-based roguelike game. This document details all game me
 #### Vitality Potions (v)
 - **Name:** VIT
 - **Color:** 9 (Yellow)
-- **Effect:** Restore 10 SAN
+- **Effect:** Restore 5 SAN
 - **Max Stack:** 1
 - **Single Use:** Yes (consumed on use)
 
@@ -215,7 +215,7 @@ Emitted by entities during actions:
 
 ### Fog Mechanics
 - **Visual:** Displayed as '?' characters
-- **Sanity Penalty:** -0.2 SAN when standing in fog
+- **Sanity Penalty:** -0.02 SAN when standing in fog
 - **Visibility:** Blocks normal vision (requires light)
 - **Dynamic:** Constantly evolves during gameplay
 
@@ -272,11 +272,11 @@ Emitted by entities during actions:
   - Active sound messages
 - Refresh and frame rate cap
 
-### HUD Layout
+### Example HUD Layout
 ```
 Line H:   [1:LIT*] [2:H2O] [3:VIT] ...
-Line H+1: FL:20 HP:450 SAN:98.5%
-Line H+3: [Faint] A heavy thud to the East
+Line H+1: FL:20 HP:450 SAN:98%
+Line H+3: [Clear] A heavy thud to the East
 ```
 
 ---

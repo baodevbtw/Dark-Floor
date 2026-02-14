@@ -9,7 +9,7 @@ import curses
 import time
 from src.darkfloor import main
 
-VERSION = "0.1.0-alpha"  # See docs/VERSION.md for version details
+VERSION = "0.1.0-alpha.1"  # See docs/VERSION.md for version details
 
 def setup_and_run():
     """Initialize and run the game."""
