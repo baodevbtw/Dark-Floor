@@ -1,5 +1,5 @@
 import curses, time, random, math
-W, H, FPS, DEBUG = 50, 20, 10, True
+W, H, FPS, DEBUG = 50, 20, 10, False
 class Player:
     MAX_HP = 1000
     MAX_SAN = 100
@@ -188,7 +188,7 @@ def main(scr, seed):
     show_help = False
     help_content = []
     try:
-        with open("help.txt", "r") as f:
+        with open("src/help.txt", "r") as f:
             help_content = f.readlines()
     except FileNotFoundError:
         help_content = ["help.txt not found.", "Press H to return."]
@@ -201,7 +201,7 @@ def main(scr, seed):
         if show_help:
             scr.addstr(0, 0, "--- HELP MENU (Press H to Return) ---", curses.color_pair(3))
             for i, line in enumerate(help_content):
-                if i < H - 2: # Prevent writing off screen
+                if i < H +5:
                     scr.addstr(i + 2, 0, line.strip(), curses.color_pair(7))
             scr.refresh()
             time.sleep(1/FPS)

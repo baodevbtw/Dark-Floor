@@ -14,6 +14,7 @@ Dark Floor is a terminal-based roguelike game. This document details all game me
 8. [Status Effects](#status-effects)
 9. [Game Loop](#game-loop)
 10. [World Seed](#world-seed)
+11. [Help Menu](#help-menu)
 
 ---
 
@@ -81,14 +82,14 @@ Dark Floor is a terminal-based roguelike game. This document details all game me
 - **Behavior:** Hunts intelligently, drains sanity
 - **Vision:** Uses light-based visibility system
 - **Movement:** 30% speed in darkness, chases visible player
-- **Sanity Drain:** -0.2 sanity per tick when visible to player
+- **Sanity Drain:** -1 sanity per tick when visible to player
 - **Threat:** -5 HP on contact
 
 ### Ambusher (#)
 - **Color:** 1 (Blue) when inactive, 9 (Yellow) when triggered
 - **Trigger Range:** 2 tiles
 - **Trigger Visual:** Changes from '#' to 'A' when triggered
-- **Sound:** Emits "Got you" on trigger
+- **Sound:** Emits "A deadly scream" on trigger
 - **Activation:** Flashes color when active
 - **Movement:** Pursues player with 1-turn cooldown
 - **Threat:** Instant death on contact
@@ -107,14 +108,14 @@ Dark Floor is a terminal-based roguelike game. This document details all game me
 #### Water Bottles (+)
 - **Name:** H2O
 - **Color:** 7 (White)
-- **Effect:** Restore 50 HP
+- **Effect:** Restore 100 HP
 - **Max Stack:** 1
 - **Single Use:** Yes (consumed on use)
 
 #### Rainbow Water (*)
 - **Name:** H2O
 - **Color:** Cycles through 7, 9, 10, 3, 5 (animated)
-- **Effect:** Restore 100 HP + 10 SAN
+- **Effect:** Restore 200 HP + 10 SAN
 - **Max Stack:** 1
 - **Single Use:** Yes (consumed on use)
 - **Rarity:** Rare, provides superior healing
@@ -217,7 +218,7 @@ Emitted by entities during actions:
 
 ### Fog Mechanics
 - **Visual:** Displayed as '?' characters
-- **Sanity Penalty:** -0.02 SAN when standing in fog
+- **Sanity Penalty:** -0.2 SAN when standing in fog
 - **Visibility:** Blocks normal vision (requires light)
 - **Dynamic:** Constantly evolves during gameplay
 
@@ -322,7 +323,6 @@ Line H+3: [Clear] A heavy thud to the East
 | H | 20 | Grid height |
 | FPS | 10 | Target frames per second |
 | DEBUG | False | Show entire map |
-| MAX_INVENTORY | 5 | Inventory slots |
 
 ---
 
@@ -332,7 +332,7 @@ Line H+3: [Clear] A heavy thud to the East
 - **Floor Decrement:** -1 when reaching exit (E)
 - **Difficulty Scaling:** More enemies on lower floors
 - **Enemy Count Formula:** 3 + (20 - floor) ÷ 3
-- **Goal:** Reach floor 0 to escape the dungeon
+- **Goal:** No specific goal yet, keep going deeper
 
 ---
 
@@ -361,3 +361,8 @@ This allows full reproducibility of runs for:
 - Testing
 - Speedrunning
 - Daily challenges (future)
+
+## Help Menu
+- Press H to pause the game and open src/help.txt
+- Game logic is fully paused while help is open
+- Press H again to return to gameplay

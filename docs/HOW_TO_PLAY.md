@@ -105,7 +105,7 @@ Standing still lets *them* get closer.
 ---
 
 ### Sanity Management
-- **Vitality (v):** Restore 10 SAN  
+- **Vitality (v):** Restore 5 SAN  
 - **Constant drain:** -0.01 SAN per tick  
 - **Fog penalty:** -0.2 SAN when standing in fog  
 - **Stalker drain:** -1 SAN per tick when visible  

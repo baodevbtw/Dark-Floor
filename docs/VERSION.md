@@ -1,6 +1,6 @@
 # Version Configuration
 
-Current: **0.1.0-alpha.3**
+Current: **0.1.0-alpha.4**
 
 Version format: MAJOR.MINOR.PATCH[-prerelease]
 
@@ -17,3 +17,4 @@ Version format: MAJOR.MINOR.PATCH[-prerelease]
 | 0.1.0-alpha.1 | Alpha | 2026-02-14 | HP/SAN clamping fix, stat system refactor |
 | 0.1.0-alpha.2 | Alpha | 2026-02-14 | Stability fixes (fog bounds, entity safety, generator crash) |
 | 0.1.0-alpha.3 | Alpha | 2026-02-14 | Reproducible seed system, startup metadata, deterministic RNG |
+| 0.1.0-alpha.4 | Alpha | 2026-02-15 | In-game help menu, death screen restart/quit, sound system |

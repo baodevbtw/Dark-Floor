@@ -9,7 +9,7 @@ import curses
 import time
 from src.darkfloor import main
 
-VERSION = "0.1.0-alpha.3"  # See docs/VERSION.md for version details
+VERSION = "0.1.0-alpha.4"  # See docs/VERSION.md for version details
 
 SEED = "dark-floor"
 
